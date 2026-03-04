@@ -1,0 +1,62 @@
+version: "3.9"
+
+services:
+
+  # ── Our FastAPI backend ──────────────────────────────────────────────
+  backend:
+    build:
+      context: ./backend
+    container_name: alphaagent-backend
+    ports:
+      - "8000:8000"
+    environment:
+      - REDIS_URL=redis://redis:6379
+      - CHROMA_HOST=chromadb
+      - CHROMA_PORT=8000
+    env_file:
+      - .env
+    volumes:
+      - ./backend:/app
+    depends_on:
+      - redis
+      - chromadb
+    networks:
+      - alphaagent-network
+    restart: unless-stopped
+
+  # ── Redis (our cache) ────────────────────────────────────────────────
+  redis:
+    image: redis:7-alpine
+    container_name: alphaagent-redis
+    ports:
+      - "6380:6379"   # host:container — use 6380 if 6379 is taken on the host
+    volumes:
+      - redis_data:/data
+    networks:
+      - alphaagent-network
+    restart: unless-stopped
+
+  # ── ChromaDB (our vector database for AI memory) ─────────────────────
+  chromadb:
+    image: chromadb/chroma:latest
+    container_name: alphaagent-chromadb
+    ports:
+      - "8001:8000"
+    volumes:
+      - chroma_data:/chroma/chroma
+    environment:
+      - IS_PERSISTENT=TRUE
+      - ANONYMIZED_TELEMETRY=FALSE
+    networks:
+      - alphaagent-network
+    restart: unless-stopped
+
+# ── Data volumes (survives container restarts) ───────────────────────
+volumes:
+  redis_data:
+  chroma_data:
+
+# ── Shared network (containers talk to each other) ───────────────────
+networks:
+  alphaagent-network:
+    driver: bridge
