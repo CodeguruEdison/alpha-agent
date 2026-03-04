@@ -1,0 +1,52 @@
+name: Frontend CI
+
+on:
+  push:
+    branches: [main, develop]
+    paths:
+      - "frontend/**"
+      - ".github/workflows/frontend-ci.yml"
+  pull_request:
+    branches: [main]
+    paths:
+      - "frontend/**"
+
+jobs:
+  lint-and-build:
+    runs-on: ubuntu-latest
+
+    steps:
+      # Step 1 — checkout your code
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      # Step 2 — setup Node.js
+      - name: Set up lts/krypton
+        uses: actions/setup-node@v4
+        with:
+          node-version: "lts/krypton"
+          cache: "npm"
+          cache-dependency-path: frontend/package-lock.json
+
+      # Step 3 — install dependencies
+      - name: Install dependencies
+        working-directory: frontend
+        run: npm ci
+
+      # Step 4 — run ESLint
+      - name: Run ESLint
+        working-directory: frontend
+        run: npm run lint
+
+      # Step 5 — type check TypeScript
+      - name: Type check
+        working-directory: frontend
+        run: npx tsc --noEmit
+
+      # Step 6 — build the app
+      - name: Build
+        working-directory: frontend
+        env:
+          NEXT_PUBLIC_API_URL: http://localhost:8000
+          NEXT_PUBLIC_WS_URL: ws://localhost:8000
+        run: npm run build

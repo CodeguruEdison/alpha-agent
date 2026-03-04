@@ -1,0 +1,67 @@
+name: Backend CI
+
+on:
+  push:
+    branches: [main, develop]
+    paths:
+      - "backend/**"
+      - ".github/workflows/backend-ci.yml"
+  pull_request:
+    branches: [main]
+    paths:
+      - "backend/**"
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+
+    services:
+      redis:
+        image: redis:7-alpine
+        ports:
+          - 6379:6379
+
+    steps:
+      # Step 1 — checkout your code
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      # Step 2 — install uv
+      - name: Install uv
+        uses: astral-sh/setup-uv@v3
+        with:
+          version: "latest"
+
+      # Step 3 — setup Python
+      - name: Set up Python 3.11
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+
+      # Step 4 — install dependencies
+      - name: Install dependencies
+        working-directory: backend
+        run: uv sync --extra dev
+
+      # Step 5 — run black formatter check
+      - name: Check formatting with black
+        working-directory: backend
+        run: uv run black --check .
+
+      # Step 6 — run isort check
+      - name: Check imports with isort
+        working-directory: backend
+        run: uv run isort --check-only .
+
+      # Step 7 — run flake8
+      - name: Run flake8
+        working-directory: backend
+        run: uv run flake8 . --max-line-length=100 --extend-ignore=E203,E501
+
+      # Step 8 — run tests
+      - name: Run tests
+        working-directory: backend
+        env:
+          REDIS_URL: redis://localhost:6379
+          GROQ_API_KEY: ${{ secrets.GROQ_API_KEY }}
+        run: uv run pytest tests/ -v --tb=short
