@@ -1,27 +1,22 @@
+import sys
+import os
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
 
-app = FastAPI()
+app = FastAPI(
+    title="AlphaAgent API",
+    description="Multi-Agent AI Finance Research Platform",
+    version="0.1.0",
+)
 
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=["*"],
+    allow_origins=["http://localhost:3000"],
     allow_credentials=True,
     allow_methods=["*"],
     allow_headers=["*"],
 )
 
-
-@app.get("/")
-def root():
-    return {"message": "alpha-agent API"}
-
-
 @app.get("/health")
-def health():
-    return {"status": "ok"}
-
-
-def run():
-    import uvicorn
-    uvicorn.run("main:app", host="0.0.0.0", port=8000, reload=True)
+async def health():
+    return {"status": "ok", "service": "alphaagent-backend"}
