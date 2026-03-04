@@ -1,0 +1,29 @@
+# virtual env
+.venv/
+venv/
+env/
+
+# uv (keep uv.lock committed for reproducible installs)
+.python-version
+
+# Python
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+.Python
+*.egg-info/
+.eggs/
+dist/
+build/
+
+# env files
+.env
+.env.*
+!.env.example
+
+# misc
+.DS_Store
+*.log
+.mypy_cache/
+.ruff_cache/

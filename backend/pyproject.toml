@@ -1,0 +1,19 @@
+[project]
+name = "alpha-agent-backend"
+version = "0.1.0"
+description = "FastAPI backend for alpha-agent"
+requires-python = ">=3.11"
+dependencies = [
+    "fastapi>=0.115.0",
+    "uvicorn[standard]>=0.32.0",
+]
+
+[project.scripts]
+run-api = "main:run"
+
+[tool.hatch.build.targets.wheel]
+only-include = ["main.py"]
+
+[build-system]
+requires = ["hatchling"]
+build-backend = "hatchling.build"
