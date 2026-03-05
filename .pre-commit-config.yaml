@@ -1,34 +1,26 @@
 repos:
-  # ── Black (Python code formatter) ───────────────────────────────────
+  # ── Black (formatter) ────────────────────────────────────────────────
   - repo: https://github.com/psf/black
     rev: 24.8.0
     hooks:
       - id: black
-        language_version: python3.12
+        language_version: python3.11
         files: ^backend/
 
-  # ── isort (sorts your imports automatically) ─────────────────────────
-  - repo: https://github.com/pycqa/isort
-    rev: 5.13.2
+  # ── Ruff (linter + isort — replaces flake8 + isort) ─────────────────
+  - repo: https://github.com/astral-sh/ruff-pre-commit
+    rev: v0.6.0
     hooks:
-      - id: isort
-        args: ["--profile", "black"]
+      - id: ruff
+        args: ["--fix"] # ← autofixes issues automatically!
         files: ^backend/
 
-  # ── flake8 (catches code errors and bad patterns) ────────────────────
-  - repo: https://github.com/pycqa/flake8
-    rev: 7.1.1
-    hooks:
-      - id: flake8
-        args: ["--max-line-length=100", "--extend-ignore=E203,E501"]
-        files: ^backend/
-
-  # ── General checks ───────────────────────────────────────────────────
+  # ── General ──────────────────────────────────────────────────────────
   - repo: https://github.com/pre-commit/pre-commit-hooks
     rev: v4.6.0
     hooks:
-      - id: trailing-whitespace      # removes trailing spaces
-      - id: end-of-file-fixer        # ensures files end with newline
-      - id: check-yaml               # validates yaml files
-      - id: check-merge-conflict     # catches unresolved merge conflicts
-      - id: detect-private-key       # stops you committing API keys!
+      - id: trailing-whitespace
+      - id: end-of-file-fixer
+      - id: check-yaml
+      - id: check-merge-conflict
+      - id: detect-private-key
