@@ -145,3 +145,61 @@ class ErrorResponse(BaseModel):
 
     error: str  # short error title  — "Ticker not found"
     detail: str  # full explanation   — "Could not fetch data for ticker: XYZABC"
+
+
+class RSI(BaseModel):
+    """
+    Relative Strength Index -momentum indicator
+    Tell us  if a stock is overbought or overload
+
+    value > 70 -> overbought (might drop)
+    value < 30 -> oversold (might bounce)
+    value 30 - 70 neutral
+    """
+
+    value: float  # e.g. 61.3
+    signal: str  # "overbought" | "oversold" | "neutral"
+
+
+class MACD(BaseModel):
+    """
+    Moving Average Convergence Divergence.
+    Tells us if momentum is shifting bullish or bearish.
+
+    macd_line > signal_line → bullish
+    macd_line < signal_line → bearish
+    """
+
+    macd_line: float  # e.g. 4.2
+    signal_line: float  # e.g. 2.8
+    histogram: float  # e.g. 1.4
+    signal: str  # "bullish" | "bearish"
+
+
+class BollingerBands(BaseModel):
+    """
+    Bollinger Bands — volatility indicator.
+    Tells us if price is unusually high or low.
+
+    price near upper → overbought
+    price near lower → oversold
+    price near middle → neutral
+    """
+
+    upper_band: float  # e.g. 901.20
+    middle_band: float  # e.g. 856.40
+    lower_band: float  # e.g. 811.60
+    signal: str  # "overbought" | "oversold" | "neutral"
+
+
+class TechnicalIndicators(BaseModel):
+    """
+    Combined technical analysis response.
+    Wraps all 3 indicators into one object.
+    Returned by our TechnicalIndicatorService.
+    """
+
+    ticker: str  # "NVDA"
+    rsi: RSI
+    macd: MACD
+    bollinger: BollingerBands
