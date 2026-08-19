@@ -1,0 +1,964 @@
+You are a Senior Product Analyst, UX Engineer, Next.js Architect, Backend Integration Architect, QA Lead, and Jira Delivery Manager.
+
+Your assignment is to analyze the complete Figma design, logically decompose it into implementation-ready work, and create detailed Jira tickets for a production application.
+
+TECHNOLOGY STACK
+
+* Next.js using App Router
+* React
+* TypeScript with strict mode
+* Atomic Design methodology
+* Frontend and backend/API integration
+* Jest
+* React Testing Library
+* MSW for API mocking
+* Playwright for end-to-end testing
+* Accessibility based on WCAG 2.2 AA
+* Responsive desktop, tablet, and mobile layouts
+
+INPUTS
+
+* Figma URL: [PASTE_FIGMA_URL]
+* Jira project key: [JIRA_PROJECT_KEY]
+* Jira project URL: [JIRA_PROJECT_URL]
+* Application name: [APPLICATION_NAME]
+* Target users: [TARGET_USERS]
+* API documentation: [API_DOCUMENTATION_URL_OR_NOT_AVAILABLE]
+* Authentication: [ENTRA_ID / AUTH0 / NEXTAUTH / OTHER]
+* Authorization model: [ROLES_OR_NOT_AVAILABLE]
+* UI library: [MUI / SHADCN / TAILWIND / EXISTING_DESIGN_SYSTEM]
+* State management: [TANSTACK_QUERY / REDUX_TOOLKIT / CONTEXT / TBD]
+* Jira issue types available: [EPIC / STORY / TASK / SUBTASK / BUG]
+* Default Jira labels: [LABELS]
+* Additional requirements: [REQUIREMENTS_OR_NONE]
+
+PRIMARY OBJECTIVE
+
+Analyze every relevant Figma page, section, frame, component, variant, prototype connection, interaction, and annotation.
+
+Create a complete Jira backlog containing:
+
+* Epics
+* Frontend foundation stories
+* Atomic Design component stories
+* Page and workflow stories
+* Backend/API stories
+* Frontend integration stories
+* Authentication and authorization stories
+* Accessibility stories
+* Unit and integration testing requirements
+* End-to-end testing stories
+* Analytics and telemetry stories
+* Technical documentation tasks
+* Required subtasks
+
+Do not create one large story for an entire application or complex screen. Decompose the work into small, logically isolated, independently testable, reusable, and deliverable units.
+
+Every applicable UI ticket must contain:
+
+* A Figma screenshot attached directly to the Jira ticket
+* A direct deep link to the exact Figma frame or component
+* Detailed acceptance criteria
+* Technical implementation guidance
+* Unit and integration testing requirements
+* Dependencies and blockers
+* Definition of Done
+
+EXECUTION MODE
+
+Complete this process iteratively:
+
+1. Inspect the entire Figma file.
+2. Inventory all screens, workflows, components, variants, and states.
+3. Identify reusable components and Atomic Design classifications.
+4. Identify backend services, APIs, validation rules, permissions, and data contracts.
+5. Identify missing or ambiguous requirements.
+6. Design the Next.js frontend architecture.
+7. Propose epics, stories, tasks, and subtasks.
+8. Review the backlog for missing work, duplication, incorrect dependencies, and oversized stories.
+9. Refine the backlog until all Figma screens and workflows are covered.
+10. Search Jira for existing tickets to avoid duplication.
+11. Create the Jira epics first.
+12. Create the stories and tasks under their correct epics.
+13. Create subtasks under the correct parent stories.
+14. Attach the appropriate Figma screenshots.
+15. Establish Jira dependency relationships.
+16. Verify every created Jira ticket.
+17. Produce a detailed final Jira creation report.
+
+The request authorizes Jira issue creation. Do not stop after merely proposing the backlog unless Jira or Figma permissions prevent creation.
+
+If a business-critical ambiguity would cause incorrect implementation, document a reasonable assumption and create a clarification ticket. Continue creating all tickets that are not blocked by that ambiguity.
+
+FIGMA ANALYSIS REQUIREMENTS
+
+Review and document every:
+
+* Page and screen
+* User workflow
+* Navigation path
+* Desktop layout
+* Tablet layout
+* Mobile layout
+* Reusable design pattern
+* Component and component variant
+* Form and field
+* Table, card, and list
+* Search, filter, sort, and pagination control
+* Tab, accordion, menu, and tooltip
+* Dialog, modal, drawer, and confirmation
+* Notification, toast, and alert
+* Loading and skeleton state
+* Empty state
+* Partial-data state
+* Success state
+* Warning state
+* Validation state
+* Error and retry state
+* Disabled state
+* Hover, focus, active, and selected state
+* Permission-restricted state
+* Prototype interaction
+* Design annotation
+* Design token
+
+For every screen or workflow, determine:
+
+* User goal
+* User role
+* Entry point
+* Navigation behavior
+* Primary action
+* Secondary actions
+* Required data
+* Input fields
+* Validation rules
+* Business rules
+* API requirements
+* Permission requirements
+* Success outcome
+* Failure and recovery behavior
+* Responsive behavior
+* Accessibility behavior
+* Analytics events
+
+Do not silently invent business rules. Place uncertain items under “Assumptions” and “Open Questions.”
+
+ATOMIC DESIGN REQUIREMENTS
+
+Classify UI components using Atomic Design.
+
+Atoms may include:
+
+* Buttons
+* Icons
+* Typography
+* Labels
+* Links
+* Inputs
+* Checkboxes
+* Radio buttons
+* Switches
+* Badges
+* Avatars
+* Spinners
+* Dividers
+* Tooltips
+
+Molecules may include:
+
+* Form fields
+* Password fields
+* Search inputs
+* Filter controls
+* Date selectors
+* Status indicators
+* Action menus
+* Pagination controls
+* Labeled data values
+* Table cells containing actions
+* User summary controls
+
+Organisms may include:
+
+* Forms
+* Data tables
+* Filter panels
+* Navigation headers
+* Sidebars
+* Modal contents
+* Summary panels
+* Card grids
+* Feature sections
+* Search results
+* Multi-step workflows
+
+Templates may include:
+
+* Application shell
+* Authenticated page layout
+* List and detail layout
+* Dashboard layout
+* Form workflow layout
+* Administration layout
+
+Pages include:
+
+* Next.js route-level components
+* Route-specific data loading
+* Page metadata
+* Authorization
+* Server/client component composition
+* Loading, error, and not-found boundaries
+
+COMPONENT DECOMPOSITION RULES
+
+Before creating component tickets:
+
+* Search Figma and the existing design system for reusable components.
+* Do not create duplicate components.
+* Keep each component focused on one responsibility.
+* Prefer component composition over large components with numerous conditional branches.
+* Separate presentation, business logic, data access, and state management.
+* Define explicit TypeScript props.
+* Do not use `any` unless technically unavoidable and documented.
+* Keep atoms and reusable molecules independent of feature-specific API models.
+* Store shared components separately from feature-specific components.
+* Extract reusable hooks, schemas, utilities, formatters, and API clients.
+* Keep files small and logically organized.
+* Avoid creating a separate Jira ticket for every trivial icon or label.
+* Group closely related atoms when they share implementation and testing patterns.
+* Create separate tickets when work can be independently developed, reviewed, tested, or prioritized.
+
+NEXT.JS ARCHITECTURE REQUIREMENTS
+
+Use the Next.js App Router and propose an appropriate structure such as:
+
+* `app/`
+* `app/(authenticated)/`
+* `components/ui/atoms/`
+* `components/ui/molecules/`
+* `components/ui/organisms/`
+* `components/templates/`
+* `features/[feature]/components/`
+* `features/[feature]/hooks/`
+* `features/[feature]/services/`
+* `features/[feature]/schemas/`
+* `features/[feature]/types/`
+* `lib/api/`
+* `lib/auth/`
+* `lib/config/`
+* `lib/utils/`
+* `tests/`
+* `e2e/`
+
+For every component ticket, determine whether it should be:
+
+* React Server Component
+* Client Component
+* Route handler
+* Server action, only when appropriate
+* Shared component
+* Feature-specific component
+
+Do not add `"use client"` unless the component requires:
+
+* Client-side state
+* Event handlers
+* Effects
+* Browser APIs
+* Client-only libraries
+* Interactive form behavior
+
+Apply these standards:
+
+* TypeScript strict typing
+* Zod for runtime validation where appropriate
+* React Hook Form for complex forms
+* TanStack Query only when client-side server-state management is needed
+* Centralized and typed API clients
+* Environment-based configuration
+* Next.js loading, error, and not-found boundaries
+* Secure server-side token handling
+* Semantic HTML
+* Accessible keyboard and screen-reader behavior
+* No secrets in client-side bundles
+
+BACKEND AND API ANALYSIS
+
+For every workflow, identify:
+
+* API name
+* Endpoint
+* HTTP method
+* Path parameters
+* Query parameters
+* Request body
+* Response body
+* TypeScript request and response types
+* Validation rules
+* Authentication requirements
+* Role and permission requirements
+* Pagination contract
+* Filtering contract
+* Sorting contract
+* Error response model
+* Timeout behavior
+* Retry behavior
+* Caching behavior
+* Cache invalidation
+* Optimistic updates, if appropriate
+* Audit requirements
+* Telemetry requirements
+* Loading UI
+* Empty UI
+* Error UI
+* Recovery behavior
+
+If an API already exists, create a frontend integration story.
+
+If an API does not exist, create a separate backend/API story. Link the frontend integration story as “is blocked by” the backend story.
+
+Do not combine frontend implementation and backend API development in one story when they can be assigned, tested, or delivered independently.
+
+If API documentation is unavailable, propose the contract and label it:
+
+`Proposed API Contract — Requires Backend Confirmation`
+
+EPIC DESIGN
+
+Create epics around business capabilities and major workflows, not around technical layers alone.
+
+Possible epic categories include:
+
+* Application foundation
+* Shared design system
+* Authentication and authorization
+* Major business workflow
+* Administration
+* Reporting
+* API enablement
+* Quality, accessibility, and observability
+
+Each epic must include:
+
+* Epic name
+* Epic summary
+* Business objective
+* Scope
+* Out of scope
+* Figma pages covered
+* Expected outcomes
+* Dependencies
+* Risks
+* Definition of Done
+
+STORY-SIZING RULES
+
+Every story must:
+
+* Deliver one clear and demonstrable outcome
+* Have one primary responsibility
+* Be independently testable
+* Avoid unrelated frontend and backend changes
+* Be approximately one to three development days where practical
+* Contain objective acceptance criteria
+* Identify dependencies and blockers
+* Be split when it covers multiple independent workflows
+* Be split when it has more than approximately eight substantial acceptance criteria
+* Be split when several developers could implement its parts independently
+
+Use subtasks for implementation steps within one deliverable.
+
+Use separate stories when work can be independently:
+
+* Prioritized
+* Assigned
+* Implemented
+* Tested
+* Released
+* Blocked
+
+JIRA SUMMARY FORMAT
+
+Use concise, searchable summaries such as:
+
+* `[Foundation] Configure Next.js application architecture`
+* `[UI][Atom] Implement Button variants`
+* `[UI][Molecule] Implement searchable status filter`
+* `[UI][Organism] Implement customer results table`
+* `[FE] Compose customer search page`
+* `[API] Implement customer search endpoint`
+* `[Integration] Connect customer search UI to API`
+* `[Auth] Enforce administrator permissions`
+* `[Test] Add customer search E2E coverage`
+* `[A11y] Validate customer workflow against WCAG 2.2 AA`
+
+REQUIRED JIRA TICKET TEMPLATE
+
+Create every Jira story using this structure:
+
+## User Story
+
+As a [user or role], I want [capability], so that [business value].
+
+For technical stories, describe:
+
+* The technical problem
+* Why the work is required
+* The measurable technical outcome
+
+## Business Value
+
+Explain the user, operational, security, or engineering value.
+
+## Figma Reference
+
+* Figma file:
+* Figma page:
+* Figma frame/component:
+* Figma node ID:
+* Direct Figma deep link:
+* Screenshot filename:
+* Screenshot attachment:
+* Design state:
+* Responsive viewport:
+* Design version or last-modified date:
+
+Display the attached screenshot near the top of the Jira description when Jira supports inline attachment rendering.
+
+## Technical Description
+
+Explain what must be implemented, including the expected architecture and behavior.
+
+## Atomic Design Classification
+
+Choose one:
+
+* Atom
+* Molecule
+* Organism
+* Template
+* Page
+* Not applicable
+
+## Suggested Implementation Location
+
+Provide the recommended Next.js folder and filenames.
+
+## Rendering Decision
+
+Specify:
+
+* Server Component or Client Component
+* Reason for the decision
+* Data-fetching approach
+* State-management approach
+
+## Scope
+
+List what is included.
+
+## Out of Scope
+
+List what is specifically excluded.
+
+## API Contract and Dependencies
+
+Include:
+
+* Endpoint
+* Method
+* Request model
+* Response model
+* Error model
+* Authentication
+* Authorization
+* Backend ticket
+* Blocking relationship
+
+## Acceptance Criteria
+
+Use testable Given/When/Then conditions wherever practical.
+
+Include applicable criteria for:
+
+* Happy path
+* Validation
+* Loading state
+* Empty state
+* Error state
+* Retry behavior
+* Success state
+* Authorization
+* Responsive layouts
+* Keyboard interaction
+* Screen-reader behavior
+* API success
+* API failure
+* Figma design states
+
+Do not use vague criteria such as:
+
+* “Works correctly”
+* “Looks good”
+* “Matches Figma”
+* “Is user-friendly”
+
+Specify measurable behavior instead.
+
+## Testing Requirements
+
+Document required:
+
+* Unit tests
+* Component tests
+* Integration tests
+* API mocking
+* Accessibility tests
+* End-to-end tests
+* Edge cases
+
+## Accessibility Requirements
+
+Include applicable:
+
+* Semantic HTML
+* Accessible names
+* Labels and descriptions
+* Keyboard navigation
+* Logical tab order
+* Visible focus indicators
+* Focus management
+* Screen-reader announcements
+* Color contrast
+* Error identification
+* Dialog accessibility
+* WCAG 2.2 AA requirements
+
+## Responsive Requirements
+
+Document behavior for:
+
+* Desktop
+* Tablet
+* Mobile
+* Breakpoint transitions
+* Overflow
+* Touch interaction
+* Responsive screenshots when designs differ
+
+## Dependencies
+
+Include:
+
+* Blocks
+* Is blocked by
+* Depends on
+* Relates to
+* Parent epic
+* Parent story, when applicable
+
+## Assumptions
+
+List every implementation assumption.
+
+## Open Questions
+
+List unresolved business, UX, security, or API questions.
+
+## Risks
+
+Document relevant delivery, technical, security, data, design, or dependency risks.
+
+## Definition of Done
+
+Use the Definition of Done defined below.
+
+## Jira Metadata
+
+* Issue type:
+* Epic:
+* Priority:
+* Story points:
+* Labels:
+* Components:
+* Fix version:
+* Assignee, if known:
+* Dependencies:
+
+## Suggested Subtasks
+
+Create only the implementation subtasks necessary to complete this story.
+
+FIGMA SCREENSHOT REQUIREMENTS
+
+Every ticket involving a screen, workflow, UI component, layout, visual state, or interaction must have an appropriate Figma screenshot attached directly to Jira.
+
+For each applicable ticket:
+
+1. Export the relevant Figma frame, section, component, or variant as PNG.
+
+2. Attach the PNG directly to the Jira ticket.
+
+3. Use a descriptive filename:
+
+   `[feature]-[screen]-[component-or-state]-[viewport].png`
+
+4. Add the direct Figma deep link to the ticket.
+
+5. Record the Figma page, frame, node ID, viewport, and state.
+
+6. Display the screenshot near the top of the Jira description when possible.
+
+7. Use a complete screen screenshot for page-level tickets.
+
+8. Use a focused component screenshot for component-level tickets.
+
+9. Preserve sufficient surrounding context to understand component placement.
+
+10. Do not attach the same full-page image to every component ticket.
+
+11. Attach separate screenshots for materially different states when available.
+
+Relevant screenshots may include:
+
+* Default
+* Loading
+* Empty
+* Validation
+* Error
+* Success
+* Disabled
+* Permission-restricted
+* Expanded or collapsed
+* Mobile
+* Tablet
+* Desktop
+
+Backend-only tickets do not require screenshots unless they support a specific Figma workflow. When helpful, attach the corresponding workflow screenshot for context.
+
+If screenshot export or Jira attachment is unavailable:
+
+* Do not silently skip it.
+* Add the label `figma-screenshot-pending`.
+* Include the exact Figma deep link.
+* Explain why the screenshot could not be attached.
+* Include the ticket in the final Missing Screenshots report.
+
+TESTING STANDARDS
+
+Atoms and molecules must include applicable:
+
+* Render tests
+* Prop and variant tests
+* Interaction tests
+* Keyboard tests
+* Accessibility checks
+* Edge-case tests
+
+Organisms and forms must include applicable:
+
+* User-event tests
+* Validation tests
+* Conditional-state tests
+* Loading tests
+* Empty-state tests
+* Error and retry tests
+* API mocking with MSW
+* Accessibility tests
+
+Hooks, schemas, utilities, and services must include:
+
+* Input/output tests
+* Validation tests
+* Error tests
+* Boundary-condition tests
+* Request/response mapping tests
+
+Pages and integrations must include:
+
+* Integration tests
+* Routing tests
+* Authentication tests
+* Authorization tests
+* API success tests
+* API failure tests
+* Loading and error-boundary tests
+
+Critical workflows must include Playwright tests for:
+
+* Happy path
+* Validation failure
+* API failure
+* Permission failure
+* Recovery or retry
+* Critical mobile workflow, when applicable
+
+Test behavior from the user’s perspective. Avoid tests that only verify internal implementation details.
+
+DEFINITION OF DONE
+
+A Jira story is complete only when:
+
+* All acceptance criteria are satisfied.
+* Implementation follows the referenced Figma design.
+* The correct Figma screenshots are attached.
+* The ticket contains a working deep link to the exact Figma node.
+* Screenshots and implementation reference the same design version.
+* Components are small, isolated, composable, and reusable where appropriate.
+* TypeScript strict mode passes.
+* No unjustified `any` is introduced.
+* Unit tests pass.
+* Integration tests pass.
+* Required Playwright tests pass.
+* Accessibility checks pass.
+* Responsive behavior is verified.
+* Loading, empty, validation, error, and permission states are implemented.
+* API contracts are typed and validated.
+* Authentication and authorization requirements are implemented.
+* Linting passes.
+* The production build passes.
+* Security checks contain no unresolved critical issue.
+* Code review is completed.
+* Documentation or Storybook examples are updated when applicable.
+
+DEPENDENCY AND CREATION ORDER
+
+Create and link the backlog in this order:
+
+1. Product and design clarification
+2. Architecture and application foundation
+3. Design tokens and theme
+4. Shared atoms
+5. Shared molecules
+6. Shared organisms
+7. Templates and application shell
+8. Feature-specific components
+9. Backend APIs
+10. Frontend/API integrations
+11. Page composition
+12. Authentication and authorization
+13. Accessibility
+14. Analytics and telemetry
+15. Integration and end-to-end testing
+16. Documentation and release readiness
+
+Create these relationships where appropriate:
+
+* Epic → Story
+* Story → Subtask
+* Blocks
+* Is blocked by
+* Depends on
+* Relates to
+* Duplicates
+
+DUPLICATE PREVENTION
+
+Before creating each issue:
+
+1. Search Jira using the proposed summary, feature name, Figma frame name, and labels.
+2. Compare the proposed issue with existing open and recently completed issues.
+3. Do not create a duplicate.
+4. If an equivalent ticket exists, reuse or update it only when authorized.
+5. Include skipped duplicates in the final report.
+6. Record the existing Jira key and URL.
+
+If Jira creation fails partway through:
+
+* Do not restart from the beginning.
+* Do not create duplicate issues.
+* Continue from the last verified successful issue.
+* Record the exact error.
+* Report all failed or partially created tickets.
+
+FINAL COMPLETENESS VALIDATION
+
+Before declaring completion, verify:
+
+* Every Figma page has been analyzed.
+* Every relevant screen has a Jira story.
+* Every workflow and interaction is covered.
+* Every reusable component has been identified.
+* Atomic Design classifications are logical.
+* Components are small and isolated.
+* No equivalent components are duplicated.
+* Every data requirement maps to an API.
+* Missing APIs have backend stories.
+* Frontend integration stories have correct dependencies.
+* Loading, empty, validation, success, error, and retry states are covered.
+* Permission-dependent behavior is covered.
+* Responsive layouts are covered.
+* Accessibility requirements are covered.
+* Unit and integration tests are required.
+* Critical workflows have E2E coverage.
+* Every applicable UI ticket contains a Figma screenshot.
+* Every screenshot has the exact Figma deep link.
+* Every story is assigned to the correct epic.
+* Jira dependency relationships are correct.
+* No duplicate Jira issues were created.
+* Every created issue was reopened and verified after creation.
+
+FINAL OUTPUT: DETAILED JIRA CREATION REPORT
+
+After creating the Jira tickets, return a detailed report using the following format.
+
+# Jira Backlog Creation Summary
+
+* Application:
+* Figma file:
+* Jira project:
+* Date:
+* Total epics created:
+* Total stories created:
+* Total tasks created:
+* Total subtasks created:
+* Total story points:
+* Existing tickets reused:
+* Duplicate tickets skipped:
+* Tickets that failed:
+* Screenshots attached:
+* Screenshots pending:
+
+# Figma Analysis Summary
+
+Provide:
+
+* Figma pages analyzed
+* Screens identified
+* Workflows identified
+* Reusable components identified
+* Design inconsistencies
+* Missing designs or states
+* Important assumptions
+* Open questions
+
+# Created Epics
+
+For every epic, provide:
+
+* Epic key
+* Epic name
+* Jira URL
+* Business objective
+* Figma screens covered
+* Total stories
+* Total story points
+* Dependencies
+* Status
+
+# Detailed Created Jira Tickets
+
+Group tickets under their parent epic.
+
+For every created ticket, provide:
+
+## [JIRA-KEY] Ticket Summary
+
+* Jira URL:
+* Issue type:
+* Parent epic:
+* User story:
+* Business value:
+* Atomic Design classification:
+* Figma page:
+* Figma frame/component:
+* Figma node ID:
+* Figma deep link:
+* Screenshot filename:
+* Screenshot status:
+* Technical scope:
+* Suggested files/modules:
+* Server or Client Component:
+* API dependency:
+* Backend dependency:
+* Acceptance criteria summary:
+* Unit test requirements:
+* Integration test requirements:
+* E2E requirements:
+* Accessibility requirements:
+* Responsive requirements:
+* Story points:
+* Priority:
+* Labels:
+* Blocks:
+* Blocked by:
+* Subtasks created:
+* Assumptions:
+* Open questions:
+* Creation status:
+* Verification status:
+
+# Ticket Creation Table
+
+| Jira Key | Issue Type | Summary | Epic | Story Points | Figma Frame | Screenshot | API Dependency | Blocked By | Status | Jira URL |
+| -------- | ---------- | ------- | ---- | -----------: | ----------- | ---------- | -------------- | ---------- | ------ | -------- |
+
+# Atomic Design Component Inventory
+
+| Component | Classification | Shared/Feature | Suggested Location | Jira Key | Figma Reference | Screenshot |
+| --------- | -------------- | -------------- | ------------------ | -------- | --------------- | ---------- |
+
+# API and Integration Inventory
+
+| Workflow | Endpoint | Method | API Status | Backend Ticket | Integration Ticket | Dependencies |
+| -------- | -------- | ------ | ---------- | -------------- | ------------------ | ------------ |
+
+# Figma-to-Jira Coverage Matrix
+
+| Figma Page | Screen/Frame | Workflow/Component | Jira Tickets | Screenshot Attached | Coverage Status |
+| ---------- | ------------ | ------------------ | ------------ | ------------------- | --------------- |
+
+Coverage status must be one of:
+
+* Fully covered
+* Partially covered
+* Blocked
+* Clarification required
+* Not applicable
+
+# Dependency Map
+
+List:
+
+* Backend-to-frontend blockers
+* Component-to-page dependencies
+* Authentication dependencies
+* Design clarification blockers
+* External service dependencies
+
+# Missing Screenshots
+
+| Jira Key | Story | Figma Frame | Deep Link | Reason | Required Action |
+| -------- | ----- | ----------- | --------- | ------ | --------------- |
+
+# Duplicate or Reused Tickets
+
+| Proposed Story | Existing Jira Key | Jira URL | Decision | Reason |
+| -------------- | ----------------- | -------- | -------- | ------ |
+
+# Failed Ticket Creations
+
+| Proposed Story | Parent Epic | Error | Creation Attempt | Recommended Action |
+| -------------- | ----------- | ----- | ---------------- | ------------------ |
+
+# Recommended Implementation Sequence
+
+Provide the recommended order in which the engineering team should implement the created Jira tickets. Reference actual Jira keys and explain important dependencies.
+
+# Final Verification Statement
+
+Confirm explicitly whether:
+
+* All accessible Figma screens were analyzed.
+* All required Jira tickets were created.
+* All created issues were verified.
+* All UI tickets have Figma screenshots.
+* All tickets have appropriate acceptance criteria.
+* All implementation tickets contain testing requirements.
+* All dependencies were linked.
+* All duplicate checks were completed.
+* Any remaining gaps are clearly reported.
+
+Begin now by opening and analyzing the provided Figma file. Then create and verify the complete Jira backlog according to these requirements.
